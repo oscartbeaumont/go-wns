@@ -73,7 +73,11 @@ func (c *Client) Send(channelUri string, notification NotificationInterface) (su
 
 	xml, _ := notification.GetXml()
 	req, _ := http.NewRequest("POST", channelUri, bytes.NewBuffer([]byte(xml)))
-	req.Header.Add("Content-Type", "text/xml; charset=utf-8")
+	if notification.GetWnsType() == "wns/raw" {
+		req.Header.Add("Content-Type", "application/octet-stream")
+	} else {
+		req.Header.Add("Content-Type", "text/xml; charset=utf-8")
+	}
 	req.Header.Add("X-WNS-Type", notification.GetWnsType())
 	req.Header.Add("Authorization", "Bearer "+c.accessToken)
 

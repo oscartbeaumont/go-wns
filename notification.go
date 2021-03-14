@@ -21,6 +21,10 @@ func NewTile() *baseNotification {
 	return newNotification(TypeTile)
 }
 
+func NewRaw() *raw {
+	return &raw{}
+}
+
 func NewBadge() *badge {
 	badge := &badge{}
 	badge.Type = TypeBadge
